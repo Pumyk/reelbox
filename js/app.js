@@ -18,25 +18,25 @@ const CFG = {
 };
 
 const MOVIE_GENRES = [
-  { id: 'all',      label: 'All',       q: 'collection:feature_films' },
-  { id: 'action',   label: 'Action',    q: 'collection:feature_films AND subject:"action"' },
-  { id: 'comedy',   label: 'Comedy',    q: 'collection:feature_films AND subject:"comedy"' },
-  { id: 'drama',    label: 'Drama',     q: 'collection:feature_films AND subject:"drama"' },
-  { id: 'horror',   label: 'Horror',    q: 'collection:feature_films AND subject:"horror"' },
-  { id: 'scifi',    label: 'Sci-Fi',    q: 'collection:feature_films AND subject:"science fiction"' },
-  { id: 'noir',     label: 'Film Noir', q: 'collection:film_noir' },
-  { id: 'western',  label: 'Western',   q: 'collection:feature_films AND subject:"western"' },
-  { id: 'mystery',  label: 'Mystery',   q: 'collection:feature_films AND subject:"mystery"' },
-  { id: 'anime',    label: 'Animation', q: 'collection:animationandcartoons' },
+  { id: 'all',      label: 'All',       q: 'collection:feature_films AND mediatype:movies AND format:"h.264"' },
+  { id: 'action',   label: 'Action',    q: 'collection:feature_films AND subject:"action" AND mediatype:movies AND format:"h.264"' },
+  { id: 'comedy',   label: 'Comedy',    q: 'collection:feature_films AND subject:"comedy" AND mediatype:movies AND format:"h.264"' },
+  { id: 'drama',    label: 'Drama',     q: 'collection:feature_films AND subject:"drama" AND mediatype:movies AND format:"h.264"' },
+  { id: 'horror',   label: 'Horror',    q: 'collection:feature_films AND subject:"horror" AND mediatype:movies AND format:"h.264"' },
+  { id: 'scifi',    label: 'Sci-Fi',    q: 'collection:feature_films AND subject:"science fiction" AND mediatype:movies AND format:"h.264"' },
+  { id: 'noir',     label: 'Film Noir', q: 'collection:film_noir AND mediatype:movies AND format:"h.264"' },
+  { id: 'western',  label: 'Western',   q: 'collection:feature_films AND subject:"western" AND mediatype:movies AND format:"h.264"' },
+  { id: 'mystery',  label: 'Mystery',   q: 'collection:feature_films AND subject:"mystery" AND mediatype:movies AND format:"h.264"' },
+  { id: 'anime',    label: 'Animation', q: 'collection:animationandcartoons AND mediatype:movies AND format:"h.264"' },
 ];
 
 const SERIES_GENRES = [
-  { id: 'all',    label: 'All',     q: 'collection:classic_tv' },
-  { id: 'drama',  label: 'Drama',   q: 'collection:classic_tv AND subject:"drama"' },
-  { id: 'comedy', label: 'Comedy',  q: 'collection:classic_tv AND subject:"comedy"' },
-  { id: 'west',   label: 'Western', q: 'collection:classic_tv AND subject:"western"' },
-  { id: 'crime',  label: 'Crime',   q: 'collection:classic_tv AND subject:"crime"' },
-  { id: 'kids',   label: 'Kids',    q: 'collection:classic_tv AND subject:"children"' },
+  { id: 'all',    label: 'All',     q: 'collection:classic_tv AND mediatype:movies AND format:"h.264"' },
+  { id: 'drama',  label: 'Drama',   q: 'collection:classic_tv AND subject:"drama" AND mediatype:movies AND format:"h.264"' },
+  { id: 'comedy', label: 'Comedy',  q: 'collection:classic_tv AND subject:"comedy" AND mediatype:movies AND format:"h.264"' },
+  { id: 'west',   label: 'Western', q: 'collection:classic_tv AND subject:"western" AND mediatype:movies AND format:"h.264"' },
+  { id: 'crime',  label: 'Crime',   q: 'collection:classic_tv AND subject:"crime" AND mediatype:movies AND format:"h.264"' },
+  { id: 'kids',   label: 'Kids',    q: 'collection:classic_tv AND subject:"children" AND mediatype:movies AND format:"h.264"' },
 ];
 
 /* ------------------------------------------------------------
@@ -530,12 +530,12 @@ async function renderHome() {
 
   try {
     const [trending, classics, noir, comedy, animation, tv] = await Promise.all([
-      archiveSearch('collection:feature_films', 18, 1, 'downloads desc'),
-      archiveSearch('collection:feature_films', 18, 1, 'year desc'),
-      archiveSearch('collection:film_noir', 18, 1, 'downloads desc'),
-      archiveSearch('collection:feature_films AND subject:"comedy"', 18, 1, 'downloads desc'),
-      archiveSearch('collection:animationandcartoons', 18, 1, 'downloads desc'),
-      archiveSearch('collection:classic_tv', 18, 1, 'downloads desc'),
+      archiveSearch('collection:feature_films AND mediatype:movies AND format:"h.264"', 18, 1, 'downloads desc'),
+      archiveSearch('collection:feature_films AND mediatype:movies AND format:"h.264"', 18, 1, 'year desc'),
+      archiveSearch('collection:film_noir AND mediatype:movies AND format:"h.264"', 18, 1, 'downloads desc'),
+      archiveSearch('collection:feature_films AND subject:"comedy" AND mediatype:movies AND format:"h.264"', 18, 1, 'downloads desc'),
+      archiveSearch('collection:animationandcartoons AND mediatype:movies AND format:"h.264"', 18, 1, 'downloads desc'),
+      archiveSearch('collection:classic_tv AND mediatype:movies AND format:"h.264"', 18, 1, 'downloads desc'),
     ]);
 
     /* --- Hero carousel --- */
@@ -948,7 +948,7 @@ function initSearch() {
 
       try {
         const items = await archiveSearch(
-          `(${q}) AND mediatype:movies`,
+          `(${q}) AND mediatype:movies AND format:"h.264"`,
           30, 1, 'downloads desc'
         );
         grid.innerHTML = '';
